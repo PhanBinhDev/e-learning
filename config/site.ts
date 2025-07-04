@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Ebook",
+  name: "Teasersoftware",
   description:
-    "E Book is a platform for reading and sharing educational materials, including interactive PDFs with audio, video, and links.",
+    "Nền tảng E-Learning tương tác với PDF Viewer tiên tiến. Hỗ trợ đọc PDF tương tác, flipbook, zoom, fullscreen và nhiều tính năng khác.",
   mainNav: [],
   links: {},
 }

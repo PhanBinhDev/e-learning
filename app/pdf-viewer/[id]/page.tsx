@@ -72,7 +72,8 @@ export default async function PdfViewerPage({ params }: PdfViewerPageProps) {
 
       {/* PDF Viewer */}
       <div className="flex-1">
-        <iframe src="https://publuu.com/flip-book/919289/2014530/page/1?embed" width="100%" height="100%" scrolling="no" frameBorder="0" allow="clipboard-write; autoplay; fullscreen" className="publuuflip"></iframe>
+        {/* <iframe src="https://publuu.com/flip-book/919289/2014530/page/1?embed" width="100%" height="100%" scrolling="no" frameBorder="0" allow="clipboard-write; autoplay; fullscreen" className="publuuflip"></iframe> */}
+        <iframe src="https://publuu.com/flip-book/919289/2014697/page/1?embed" width="100%" height="100%" scrolling="no" frameBorder="0" allow="clipboard-write; autoplay; fullscreen" className="publuuflip"></iframe>
       </div>
     </div>
   );
