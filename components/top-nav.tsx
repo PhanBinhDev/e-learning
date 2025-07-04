@@ -50,9 +50,8 @@ const TopNav = () => {
               ref={(el) => {
                 tabsRef.current[index] = el;
               }}
-              variant="ghost"
-              className={`rounded-2xl relative z-10 transition-colors duration-300 select-none ${activeTab === grade.slug ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                }`}
+              variant={activeTab === grade.slug ? "default" : "ghost"}
+              className="rounded-2xl relative z-10 transition-colors duration-300 select-none"
             >
               {grade.name}
             </Button>

@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig
 export const siteConfig = {
   name: "Ebook",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "E Book is a platform for reading and sharing educational materials, including interactive PDFs with audio, video, and links.",
   mainNav: [],
   links: {},
 }

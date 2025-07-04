@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
+import BackToList from '@/components/back-to-list';
 
 interface PdfViewerPageProps {
   params: Promise<{ id: string }>;
@@ -58,10 +57,7 @@ export default async function PdfViewerPage({ params }: PdfViewerPageProps) {
       {/* Header */}
       <div className="bg-background border-b border-border p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link href="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
-            <ChevronLeft className="h-4 w-4" />
-            <span>Quay lại</span>
-          </Link>
+          <BackToList />
           <div className="h-6 w-px bg-border" />
           <div>
             <h1 className="font-semibold text-foreground">
