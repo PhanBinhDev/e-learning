@@ -1,0 +1,137 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+  /Font <<
+    /F1 5 0 R
+  >>
+>>
+/Annots [6 0 R 7 0 R 8 0 R]
+>>
+endobj
+
+4 0 obj
+<<
+/Length 400
+>>
+stream
+BT
+/F1 18 Tf
+72 720 Td
+(Interactive PDF Demo) Tj
+0 -30 Td
+/F1 12 Tf
+(This PDF contains interactive elements:) Tj
+0 -20 Td
+(1. Click the link below to visit Google) Tj
+0 -20 Td
+(2. Click the button to show alert) Tj
+0 -20 Td
+(3. Fill out the form field) Tj
+0 -60 Td
+(Link: ) Tj
+0 -40 Td
+(Button: ) Tj
+0 -40 Td
+(Form Field: ) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+6 0 obj
+<<
+/Type /Annot
+/Subtype /Link
+/Rect [120 600 200 620]
+/A <<
+  /Type /Action
+  /S /URI
+  /URI (https://www.google.com)
+>>
+/Border [0 0 1]
+/C [0 0 1]
+>>
+endobj
+
+7 0 obj
+<<
+/Type /Annot
+/Subtype /Widget
+/Rect [120 560 200 580]
+/FT /Btn
+/T (Button1)
+/A <<
+  /Type /Action
+  /S /JavaScript
+  /JS (app.alert\("Hello from PDF!"\);)
+>>
+/AP <<
+  /N <<
+    /Type /XObject
+    /Subtype /Form
+    /BBox [0 0 80 20]
+    /Resources <<>>
+    /Length 50
+  >>
+>>
+>>
+endobj
+
+8 0 obj
+<<
+/Type /Annot
+/Subtype /Widget
+/Rect [120 520 300 540]
+/FT /Tx
+/T (TextField1)
+/V ()
+/DV ()
+>>
+endobj
+
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000284 00000 n 
+0000000736 00000 n 
+0000000804 00000 n 
+0000000968 00000 n 
+0000001234 00000 n 
+trailer
+<<
+/Size 9
+/Root 1 0 R
+>>
+startxref
+1330
+%%EOF
