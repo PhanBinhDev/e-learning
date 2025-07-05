@@ -177,6 +177,23 @@
   transform: scaleX(1.1);
 }
 
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
 /* Dark mode scrollbar adjustments */
 .dark *:hover::-webkit-scrollbar-track,
 .dark *.scrolling::-webkit-scrollbar-track {
