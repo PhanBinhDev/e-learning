@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import MainLayout from "@/components/main-layout";
+import { AiChatProvider } from "@/components/ai-chat-context";
 
 export const metadata: Metadata = {
   title: {
@@ -54,12 +55,14 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <MainLayout>
-              {children}
-            </MainLayout>
-          </div>
+          <AiChatProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <MainLayout>
+                {children}
+              </MainLayout>
+            </div>
+          </AiChatProvider>
           <TailwindIndicator />
         </ThemeProvider>
       </body>

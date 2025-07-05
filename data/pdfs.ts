@@ -4,6 +4,7 @@ export interface PdfFile {
   size: string;
   uploadDate: string;
   thumbnail: string;
+  file: string;
   iframeUrl?: string;
   subject: string;
   grade: string;
@@ -20,6 +21,7 @@ export const pdfData: Record<string, Record<string, PdfFile[]>> = {
         size: "2.5 MB",
         uploadDate: "2024-01-15",
         thumbnail: "/chapters/chapter1.png",
+        file: '/pdfs/bai1.pdf',
         iframeUrl: "https://publuu.com/flip-book/919289/2015138/page/1?embed",
         subject: "Tiếng Anh",
         grade: "Mẫu giáo"
@@ -30,6 +32,7 @@ export const pdfData: Record<string, Record<string, PdfFile[]>> = {
         size: "3.2 MB",
         uploadDate: "2024-01-20",
         thumbnail: "/chapters/chapter2.png",
+        file: '/pdfs/bai2.pdf',
         iframeUrl: "https://publuu.com/flip-book/919289/2015421/page/1?embed",
         subject: "Tiếng Anh",
         grade: "Mẫu giáo"
@@ -40,6 +43,7 @@ export const pdfData: Record<string, Record<string, PdfFile[]>> = {
         size: "1.8 MB", 
         uploadDate: "2024-01-25",
         thumbnail: "/chapters/chapter3.png",
+        file: '/pdfs/bai3.pdf',
         iframeUrl: "https://publuu.com/flip-book/919289/2015422/page/1?embed",
         subject: "Tiếng Anh",
         grade: "Mẫu giáo"

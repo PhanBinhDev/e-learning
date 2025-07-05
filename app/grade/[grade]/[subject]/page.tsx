@@ -19,8 +19,6 @@ export default async function SubjectPage({
     notFound();
   }
 
-  console.log("Grade Data:", { gradeData, subjectData });
-
   return (
     <PdfList subject={subjectData.name} grade={gradeData.name} />
   );
