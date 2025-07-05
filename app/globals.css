@@ -121,6 +121,23 @@
   }
 }
 
+@utility container {
+  padding-inline: 10px;
+  margin-inline: auto;
+  
+  @variant sm {
+    padding-inline: 20px;
+  }
+  
+  @variant lg {
+    padding-inline: 40px;
+  }
+  
+  @variant xl {
+    padding-inline: 60px;
+  }
+}
+
 
 /* GLOBAL SCROLLBAR - Applied to ALL scrollable elements automatically */
 * {
