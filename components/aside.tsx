@@ -18,7 +18,7 @@ const Aside = () => {
   const subjects = currentGrade?.subjects || [];
 
   return (
-    <aside className="w-[250px] h-[calc(100vh-64px)] border-r border-border bg-background overflow-y-auto fixed left-0 top-16 z-30">
+    <aside className="hidden md:block w-[250px] h-[calc(100vh-64px)] border-r border-border bg-background overflow-y-auto fixed left-0 top-16 z-30">
       <div className="p-4">
         <h2 className="text-lg font-semibold mb-2 text-foreground">
           Lớp {currentGrade?.name || currentGradeSlug}

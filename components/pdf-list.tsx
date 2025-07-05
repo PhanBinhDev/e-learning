@@ -76,74 +76,77 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground mb-2">
+    <div className="p-3 md:p-6">
+      <div className="mb-4 md:mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2">
           {subject} - Lớp {grade}
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-sm md:text-base text-muted-foreground">
           Danh sách tài liệu học tập cho môn {subject}
         </p>
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="bg-background border border-border rounded-lg p-4 mb-6">
+      <div className="bg-background border border-border rounded-lg p-3 md:p-4 mb-4 md:mb-6">
         <div className="flex flex-col gap-4">
           {/* Search */}
-          <div className="relative w-full sm:max-w-md">
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <input
               type="text"
               placeholder="Tìm kiếm tài liệu..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 md:py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base md:text-sm"
             />
           </div>
 
           {/* Sort and View Controls */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center sm:justify-between">
-            {/* Sort Buttons - Modern pill style */}
-            <div className="flex flex-wrap items-center gap-2 bg-muted/30 p-1 rounded-full">
-              <Button
-                variant={sortBy === 'name' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => toggleSort('name')}
-                className={`rounded-full px-3 sm:px-4 text-xs sm:text-sm transition-all ${sortBy === 'name' ? 'bg-primary shadow-sm' : 'hover:bg-muted'}`}
-              >
-                Tên {sortBy === 'name' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
-              </Button>
-              <Button
-                variant={sortBy === 'size' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => toggleSort('size')}
-                className={`rounded-full px-3 sm:px-4 text-xs sm:text-sm transition-all ${sortBy === 'size' ? 'bg-primary shadow-sm' : 'hover:bg-muted'}`}
-              >
-                <span className="hidden sm:inline">Kích thước</span>
-                <span className="sm:hidden">Size</span>
-                {sortBy === 'size' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
-              </Button>
-              <Button
-                variant={sortBy === 'date' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => toggleSort('date')}
-                className={`rounded-full px-3 sm:px-4 text-xs sm:text-sm transition-all ${sortBy === 'date' ? 'bg-primary shadow-sm' : 'hover:bg-muted'}`}
-              >
-                Ngày {sortBy === 'date' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
-              </Button>
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-4 sm:items-center sm:justify-between">
+            {/* Sort Buttons - With sliding indicator */}
+            <div className="relative bg-muted/30 p-1 rounded-lg overflow-x-auto">
+              <div className="flex items-center gap-1">
+                <Button
+                  variant={sortBy === 'name' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => toggleSort('name')}
+                  className={`relative z-10 rounded-lg px-4 text-sm whitespace-nowrap transition-colors ${sortBy === 'name' ? 'text-primary-foreground' : 'text-foreground hover:text-foreground'
+                    }`}
+                >
+                  Tên {sortBy === 'name' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
+                </Button>
+                <Button
+                  variant={sortBy === 'size' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => toggleSort('size')}
+                  className={`relative z-10 rounded-lg px-4 text-sm whitespace-nowrap transition-colors ${sortBy === 'size' ? 'text-primary-foreground' : 'text-foreground hover:text-foreground'
+                    }`}
+                >
+                  Size {sortBy === 'size' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
+                </Button>
+                <Button
+                  variant={sortBy === 'date' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => toggleSort('date')}
+                  className={`relative z-10 rounded-lg px-4 text-sm whitespace-nowrap transition-colors ${sortBy === 'date' ? 'text-primary-foreground' : 'text-foreground hover:text-foreground'
+                    }`}
+                >
+                  Ngày {sortBy === 'date' && (sortOrder === 'asc' ? <SortAsc className="ml-1 h-3 w-3" /> : <SortDesc className="ml-1 h-3 w-3" />)}
+                </Button>
+              </div>
             </div>
 
-            {/* View Mode Toggle - Toggle switch style */}
-            <div className="relative bg-muted/50 p-1 rounded-full flex items-center w-fit">
+            {/* View Mode Toggle */}
+            <div className="relative bg-muted/50 p-1 gap-1 rounded-lg flex items-center w-fit ml-auto sm:mx-0">
               <div
-                className={`absolute top-1 w-8 h-8 bg-background rounded-full shadow-sm transition-transform duration-200 ease-in-out ${viewMode === 'grid' ? 'transform translate-x-8' : 'transform translate-x-0'
+                className={`absolute top-1 w-8 h-8 bg-background rounded-lg shadow-sm transition-transform duration-200 ease-in-out ${viewMode === 'grid' ? 'transform translate-x-9' : 'transform translate-x-0'
                   }`}
               />
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewMode('list')}
-                className={`relative z-10 w-8 h-8 p-0 rounded-full transition-colors ${viewMode === 'list' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                className={`relative z-10 w-8 h-8 p-0 rounded-lg transition-colors ${viewMode === 'list' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   }`}
               >
                 <List className="h-4 w-4" />
@@ -152,7 +155,7 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewMode('grid')}
-                className={`relative z-10 w-8 h-8 p-0 rounded-full transition-colors ${viewMode === 'grid' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                className={`relative z-10 w-8 h-8 p-0 rounded-lg transition-colors ${viewMode === 'grid' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   }`}
               >
                 <Grid className="h-4 w-4" />
@@ -173,7 +176,7 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
             )}
           </div>
           {searchTerm && (
-            <div className="text-xs bg-muted/50 px-2 py-0.5 rounded-full w-fit">
+            <div className="text-xs bg-muted/50 px-2 py-1 rounded-full w-fit">
               Tìm kiếm: &ldquo;{searchTerm}&rdquo;
             </div>
           )}
@@ -181,11 +184,11 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
       </div>
 
       {/* PDF Files List/Grid */}
-      <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "space-y-4"}>
+      <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6" : "space-y-3 md:space-y-4"}>
         {sortedFiles.map((file) => (
           <div
             key={file.id}
-            className={`bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 ${viewMode === 'grid' ? 'flex flex-col' : 'flex items-center justify-between p-4'
+            className={`bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 ${viewMode === 'grid' ? 'flex flex-col' : 'flex items-center justify-between p-3 md:p-4'
               }`}
           >
             {viewMode === 'grid' ? (
@@ -202,104 +205,145 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                      <PdfIcon className="w-16 h-16 text-gray-400" />
+                      <PdfIcon className="w-8 h-8 md:w-16 md:h-16 text-gray-400" />
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-tight">
+                <div className="p-2 md:p-4 flex-1 flex flex-col">
+                  <h3 className="font-medium md:font-semibold text-foreground mb-1 md:mb-2 line-clamp-2 leading-tight text-xs md:text-base">
                     {file.name}
                   </h3>
 
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
-                    <span className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="flex items-center gap-1 md:gap-3 text-xs text-muted-foreground mb-2 md:mb-4">
+                    <span className="flex items-center gap-0.5 md:gap-1">
+                      <div className="w-1 h-1 md:w-2 md:h-2 bg-blue-500 rounded-full"></div>
                       {file.size}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      {new Date(file.uploadDate).toLocaleDateString('vi-VN')}
+                    <span className="flex items-center gap-0.5 md:gap-1">
+                      <div className="w-1 h-1 md:w-2 md:h-2 bg-green-500 rounded-full"></div>
+                      <span className="hidden sm:inline">{new Date(file.uploadDate).toLocaleDateString('vi-VN')}</span>
+                      <span className="sm:hidden">{new Date(file.uploadDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })}</span>
                     </span>
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-auto flex gap-2">
+                  <div className="mt-auto flex gap-1 md:gap-2">
                     <Button
                       variant="default"
                       size="sm"
                       onClick={() => handleView(file)}
-                      className="flex-1 flex items-center justify-center gap-1 cursor-pointer"
+                      className="flex-1 flex items-center justify-center gap-0.5 md:gap-1 cursor-pointer text-xs h-7 md:h-9 px-1 md:px-3"
                     >
-                      <Eye className="h-4 w-4" />
-                      Xem
+                      <Eye className="h-3 w-3 md:h-4 md:w-4" />
+                      <span className="hidden sm:inline">Xem</span>
                     </Button>
                     <Button
                       variant="outline"
+                      disabled
                       size="sm"
                       onClick={() => handleDownload(file)}
-                      className="flex items-center gap-1 cursor-pointer"
+                      className="flex items-center gap-0.5 shrink-0 md:gap-1 cursor-pointer text-xs h-7 md:h-9 px-1 md:px-3"
                     >
-                      <Download className="h-4 w-4" />
+                      <Download className="h-3 w-3 md:h-4 md:w-4" />
+                      <span className="hidden sm:inline">Tải</span>
                     </Button>
                   </div>
                 </div>
               </>
             ) : (
-              // List view - Compact style
-              <>
-                <div className="flex items-center flex-1">
-                  {/* Thumbnail */}
-                  <div className="mr-4 flex-shrink-0">
-                    {file.thumbnail ? (
-                      <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-border">
-                        <Image
-                          src={file.thumbnail}
-                          alt={file.name}
-                          fill
-                          className="object-cover"
-                        />
+              // List view - Compact style with clickable row on mobile
+              <div
+                className="cursor-pointer w-full hover:bg-muted/30 transition-colors md:cursor-default md:hover:bg-transparent"
+                onClick={() => viewMode === 'list' && window.innerWidth < 768 ? handleView(file) : undefined}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center flex-1 min-w-0">
+                    {/* Thumbnail */}
+                    <div className="mr-3 md:mr-4 flex-shrink-0">
+                      {file.thumbnail ? (
+                        <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border border-border">
+                          <Image
+                            src={file.thumbnail}
+                            alt={file.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-muted/30 flex items-center justify-center">
+                          <PdfIcon className="w-6 h-6 md:w-8 md:h-8 text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex-1 min-w-0 pr-2">
+                      <h3 className="font-medium text-foreground line-clamp-2 md:truncate text-sm md:text-base mb-1 leading-tight">
+                        {file.name}
+                      </h3>
+                      <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                          {file.size}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                          <span className="hidden sm:inline">{new Date(file.uploadDate).toLocaleDateString('vi-VN')}</span>
+                          <span className="sm:hidden">{new Date(file.uploadDate).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })}</span>
+                        </span>
                       </div>
-                    ) : (
-                      <div className="w-16 h-16 rounded-lg bg-muted/30 flex items-center justify-center">
-                        <PdfIcon className="w-8 h-8 text-gray-400" />
-                      </div>
-                    )}
+                    </div>
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-medium text-foreground truncate">{file.name}</h3>
+                  {/* Actions - Only show download on mobile, both on desktop */}
+                  <div className="flex items-center gap-1 md:gap-2 flex-shrink-0 ml-auto">
+                    {/* Desktop: Show both buttons */}
+                    <div className="hidden md:flex gap-2">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        onClick={() => handleView(file)}
+                        className="flex items-center gap-1 cursor-pointer text-sm h-9 px-3"
+                      >
+                        <Eye className="h-4 w-4" />
+                        Xem
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleDownload(file)}
+                        disabled
+                        className="flex items-center gap-1 cursor-pointer text-sm h-9 px-3"
+                      >
+                        <Download className="h-4 w-4" />
+                        Tải về
+                      </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span>{file.size}</span>
-                      <span>{new Date(file.uploadDate).toLocaleDateString('vi-VN')}</span>
+
+                    {/* Mobile: Only download button + chevron indicator */}
+                    <div className="md:hidden flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownload(file);
+                        }}
+                        className="flex items-center gap-1 cursor-pointer text-xs h-8 px-2 hover:bg-muted"
+                      >
+                        <Download className="h-3 w-3" />
+                      </Button>
+                      {/* Chevron indicator for clickable row */}
+                      <div className="text-muted-foreground">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    variant="default"
-                    size="sm"
-                    onClick={() => handleView(file)}
-                    className="flex items-center gap-1 cursor-pointer"
-                  >
-                    <Eye className="h-4 w-4" />
-                    Xem
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDownload(file)}
-                    className="flex items-center gap-1 cursor-pointer"
-                  >
-                    <Download className="h-4 w-4" />
-                    Tải về
-                  </Button>
-                </div>
-              </>
+              </div>
             )}
           </div>
         ))}
@@ -307,41 +351,39 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
 
       {/* No results message */}
       {sortedFiles.length === 0 && (
-        <Card className="text-center py-12 bg-background rounded-md">
+        <Card className="text-center py-8 md:py-12 mx-2 md:mx-0">
           {allPdfFiles.length === 0 ? (
             // Case 1: No documents available for this subject
             <>
               <div className="text-muted-foreground mb-4">
-                <PdfIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                <PdfIcon className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 text-gray-300" />
               </div>
-              <div>
-                <div className="text-muted-foreground mb-2 text-lg font-medium">
-                  Chưa có tài liệu nào
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Môn {subject} - Lớp {grade} hiện chưa có tài liệu học tập
-                </p>
+              <div className="text-muted-foreground mb-2 text-lg md:text-xl font-medium">
+                Chưa có tài liệu nào
               </div>
+              <p className="text-sm md:text-base text-muted-foreground px-4">
+                Môn {subject} - Lớp {grade} hiện chưa có tài liệu học tập
+              </p>
             </>
           ) : (
             // Case 2: Documents exist but filtered out
             <>
               <div className="text-muted-foreground mb-4">
-                <Search className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                <Search className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 text-gray-300" />
               </div>
-              <div className="text-muted-foreground mb-2 text-lg font-medium">
+              <div className="text-muted-foreground mb-2 text-lg md:text-xl font-medium">
                 Không tìm thấy tài liệu nào
               </div>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6 px-4">
                 Không có tài liệu nào phù hợp với bộ lọc hiện tại
               </p>
-              <div className="flex flex-col sm:flex-row gap-2 justify-center">
+              <div className="flex flex-col gap-2 justify-center px-4">
                 {searchTerm && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setSearchTerm("")}
-                    className="flex items-center gap-1"
+                    className="flex items-center justify-center gap-1 text-sm h-10 w-full max-w-xs mx-auto"
                   >
                     Xóa từ khóa tìm kiếm
                   </Button>
@@ -354,7 +396,7 @@ const PdfList = ({ subject, grade }: PdfListProps) => {
                     setSortBy('name');
                     setSortOrder('asc');
                   }}
-                  className="flex items-center gap-1"
+                  className="flex items-center justify-center gap-1 text-sm h-10 w-full max-w-xs mx-auto"
                 >
                   Đặt lại bộ lọc
                 </Button>
