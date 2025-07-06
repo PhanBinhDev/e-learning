@@ -149,32 +149,32 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
   if (!isOpen) return null;
 
   return (
-    <div className={cn("w-full h-full bg-background border-l border-border text-white flex flex-col", className)}>
+    <div className={cn("w-full h-full bg-background border-l border-border text-foreground flex flex-col", className)}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+      <div className="p-4 border-b border-border flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Bot className="h-5 w-5 text-orange-500" />
-          <h2 className="font-semibold text-white">AI Chat</h2>
+          <Bot className="h-5 w-5 text-primary" />
+          <h2 className="font-semibold text-foreground">AI Chat</h2>
         </div>
-        <Button variant="ghost" size="sm" onClick={onClose} className="text-white hover:bg-gray-800">
+        <Button variant="ghost" size="sm" onClick={onClose} className="text-foreground hover:bg-accent">
           <X className="h-4 w-4" />
         </Button>
       </div>
 
       {/* Current File Info */}
       {currentFile && (
-        <div className="p-3 bg-gray-900 border-b border-gray-700">
-          <p className="text-xs text-gray-400 mb-1">Đang xem:</p>
-          <p className="text-sm font-medium truncate text-white">{currentFile.name}</p>
-          <p className="text-xs text-gray-400">{currentFile.subject} - Lớp {currentFile.grade}</p>
+        <div className="p-3 bg-muted border-b border-border">
+          <p className="text-xs text-muted-foreground mb-1">Đang xem:</p>
+          <p className="text-sm font-medium truncate text-foreground">{currentFile.name}</p>
+          <p className="text-xs text-muted-foreground">{currentFile.subject} - Lớp {currentFile.grade}</p>
           {currentPageInfo && (
-            <div className="mt-2 pt-2 border-t border-gray-700">
-              <p className="text-xs text-gray-400">
+            <div className="mt-2 pt-2 border-t border-border">
+              <p className="text-xs text-muted-foreground">
                 {currentPageInfo.pageNumber && `Trang ${currentPageInfo.pageNumber}`}
                 {currentPageInfo.totalPages && ` / ${currentPageInfo.totalPages}`}
               </p>
               {currentPageInfo.content && (
-                <p className="text-xs text-gray-500 mt-1 truncate">
+                <p className="text-xs text-muted-foreground mt-1 truncate">
                   {currentPageInfo.content}
                 </p>
               )}
@@ -187,10 +187,10 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
       <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-200px)]">
         {isAnalyzing && (
           <div className="flex justify-start">
-            <div className="max-w-[80%] p-3 rounded-lg bg-gray-800 text-white">
+            <div className="max-w-[80%] p-3 rounded-lg bg-muted text-foreground">
               <div className="flex items-center space-x-2 mb-1">
                 <Bot className="h-3 w-3" />
-                <span className="text-xs opacity-70">Phân tích bài học...</span>
+                <span className="text-xs text-muted-foreground">Phân tích bài học...</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -207,8 +207,8 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
           >
             <div
               className={`max-w-[80%] p-3 rounded-lg ${message.isUser
-                ? 'bg-orange-500 text-white'
-                : 'bg-gray-800 text-white'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-foreground'
                 }`}
             >
               <div className="flex items-center space-x-2 mb-1">
@@ -217,7 +217,7 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
                 ) : (
                   <Bot className="h-3 w-3" />
                 )}
-                <span className="text-xs opacity-70">
+                <span className="text-xs text-muted-foreground">
                   {message.timestamp.toLocaleTimeString()}
                 </span>
               </div>
@@ -228,10 +228,10 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="max-w-[80%] p-3 rounded-lg bg-gray-800 text-white">
+            <div className="max-w-[80%] p-3 rounded-lg bg-muted text-foreground">
               <div className="flex items-center space-x-2 mb-1">
                 <Bot className="h-3 w-3" />
-                <span className="text-xs opacity-70">Đang trả lời...</span>
+                <span className="text-xs text-muted-foreground">Đang trả lời...</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -243,7 +243,7 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-gray-700">
+      <div className="p-4 border-t border-border">
         <div className="flex space-x-2">
           <input
             type="text"
@@ -251,13 +251,13 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Hỏi về file này..."
-            className="flex-1 px-3 py-2 text-sm border border-gray-600 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="flex-1 px-3 py-2 text-sm border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <Button
             size="sm"
             onClick={handleSendMessage}
             disabled={isLoading || !inputMessage.trim()}
-            className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50"
+            className="bg-primary hover:bg-primary/90 disabled:opacity-50"
           >
             {isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
