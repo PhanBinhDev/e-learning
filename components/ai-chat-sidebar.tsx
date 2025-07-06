@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Send, Bot, User, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -32,63 +32,97 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  // Ref để track file đã analyze
+  const analyzedFileRef = useRef<string | null>(null);
+  const isAnalyzingRef = useRef(false);
+
+  // Memoize currentFile để tránh re-render không cần thiết
+  const currentFileId = currentFile ? `${currentFile.name}-${currentFile.file}` : null;
+
   // Phân tích PDF khi currentFile thay đổi
-  useEffect(() => {
-    const analyzePdf = async () => {
-      if (!currentFile || pdfAnalysis) return;
+  const analyzePdf = useCallback(async () => {
+    if (!currentFile || !currentFileId) return;
 
-      console.log('Starting PDF analysis for:', currentFile.name);
-      console.log('PDF path:', currentFile.file);
+    // Kiểm tra nếu file này đã được analyze hoặc đang analyze
+    if (analyzedFileRef.current === currentFileId || isAnalyzingRef.current) {
+      console.log('File already analyzed or analyzing:', currentFileId);
+      return;
+    }
 
-      setIsAnalyzing(true);
-      try {
-        const response = await fetch('/api/analyze-pdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            pdfName: currentFile.name,
-            subject: currentFile.subject,
-            grade: currentFile.grade,
-            pdfPath: currentFile.file || '', // Gửi PDF path để đọc file
-          }),
-        });
+    // Kiểm tra nếu đã có analysis trong context
+    if (pdfAnalysis) {
+      console.log('PDF analysis already exists in context');
+      return;
+    }
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            setPdfAnalysis(data.analysis);
+    console.log('Starting PDF analysis for:', currentFile.name);
+    console.log('PDF path:', currentFile.file);
 
-            // Thêm tin nhắn chào mừng với thông tin phân tích
-            const welcomeMessage: Message = {
-              id: 'welcome',
-              content: `Xin chào! Tôi đã phân tích bài học "${currentFile.name}" và sẵn sàng giúp bạn.\n\n**Tóm tắt bài học:**\n${data.analysis.summary}\n\n**Chủ đề chính:**\n${data.analysis.topics.join(', ')}\n\n**Từ khóa quan trọng:**\n${data.analysis.keywords.slice(0, 5).join(', ')}\n\nBạn có thể hỏi tôi về bất kỳ nội dung nào trong bài học này!`,
-              isUser: false,
-              timestamp: new Date()
-            };
+    isAnalyzingRef.current = true;
+    setIsAnalyzing(true);
 
-            setMessages([welcomeMessage]);
-            console.log('PDF analysis completed. Text length:', data.analysis.extractedTextLength);
-          }
+    try {
+      const response = await fetch('/api/analyze-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pdfName: currentFile.name,
+          subject: currentFile.subject,
+          grade: currentFile.grade,
+          pdfPath: currentFile.file || '',
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setPdfAnalysis(data.analysis);
+          analyzedFileRef.current = currentFileId;
+
+          // Thêm tin nhắn chào mừng với thông tin phân tích
+          const welcomeMessage: Message = {
+            id: 'welcome',
+            content: `Xin chào! Tôi đã phân tích bài học "${currentFile.name}" và sẵn sàng giúp bạn.\n\n**Tóm tắt bài học:**\n${data.analysis.summary}\n\n**Chủ đề chính:**\n${data.analysis.topics.join(', ')}\n\n**Từ khóa quan trọng:**\n${data.analysis.keywords.slice(0, 5).join(', ')}\n\nBạn có thể hỏi tôi về bất kỳ nội dung nào trong bài học này!`,
+            isUser: false,
+            timestamp: new Date()
+          };
+
+          setMessages([welcomeMessage]);
+          console.log('PDF analysis completed. Text length:', data.analysis.extractedTextLength);
         }
-      } catch (error) {
-        console.error('Error analyzing PDF:', error);
-        // Fallback welcome message
-        const fallbackMessage: Message = {
-          id: 'welcome',
-          content: `Xin chào! Tôi là AI trợ lý giáo dục. Tôi sẽ giúp bạn về bài học "${currentFile.name}" - ${currentFile.subject} lớp ${currentFile.grade}. Hãy đặt câu hỏi về nội dung bài học nhé!`,
-          isUser: false,
-          timestamp: new Date()
-        };
-        setMessages([fallbackMessage]);
-      } finally {
-        setIsAnalyzing(false);
       }
-    };
+    } catch (error) {
+      console.error('Error analyzing PDF:', error);
+      // Fallback welcome message
+      const fallbackMessage: Message = {
+        id: 'welcome',
+        content: `Xin chào! Tôi là AI trợ lý giáo dục. Tôi sẽ giúp bạn về bài học "${currentFile.name}" - ${currentFile.subject} lớp ${currentFile.grade}. Hãy đặt câu hỏi về nội dung bài học nhé!`,
+        isUser: false,
+        timestamp: new Date()
+      };
+      setMessages([fallbackMessage]);
+    } finally {
+      setIsAnalyzing(false);
+      isAnalyzingRef.current = false;
+    }
+  }, [currentFile, currentFileId, pdfAnalysis, setPdfAnalysis]);
 
+  useEffect(() => {
     analyzePdf();
-  }, [currentFile, pdfAnalysis, setPdfAnalysis]);
+  }, [analyzePdf]);
+
+  // Reset khi file thay đổi
+  useEffect(() => {
+    if (currentFileId && analyzedFileRef.current !== currentFileId) {
+      // Reset messages khi chuyển file
+      setMessages([]);
+      // Reset analysis state
+      analyzedFileRef.current = null;
+    }
+  }, [currentFileId]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -217,7 +251,7 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
                 ) : (
                   <Bot className="h-3 w-3" />
                 )}
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs">
                   {message.timestamp.toLocaleTimeString()}
                 </span>
               </div>
