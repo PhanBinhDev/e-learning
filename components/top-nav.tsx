@@ -50,10 +50,8 @@ const TopNav = () => {
       }
     };
 
-    // Small delay to ensure DOM is ready
     const timer = setTimeout(updateIndicator, 100);
 
-    // Also update on window resize
     const handleResize = () => {
       setTimeout(updateIndicator, 50);
     };

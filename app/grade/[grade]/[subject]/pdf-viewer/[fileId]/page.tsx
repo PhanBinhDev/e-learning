@@ -58,7 +58,7 @@ export default function PdfViewerPage({ params }: PdfViewerPageProps) {
           </div>
 
           {/* AI Chat Toggle Button */}
-          <Button variant="default" onClick={() => setIsAiChatOpen(!isAiChatOpen)} className="ml-2 sm:ml-4 rounded-lg hidden md:flex">
+          <Button variant="default" onClick={() => setIsAiChatOpen(!isAiChatOpen)} className="ml-2 sm:ml-4 cursor-pointer rounded-lg hidden md:flex">
             <BotMessageSquare className='md:mr-2' />
             <span className='hidden md:block'>Trợ lý AI</span>
           </Button>

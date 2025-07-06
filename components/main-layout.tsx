@@ -25,7 +25,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
       {/* AI Chat Sidebar - Desktop (Fixed Right Side) - Chỉ hiện khi có currentFile */}
       {currentFile && (
-        <div className={`hidden md:block transition-all duration-300 ${isAiChatOpen ? 'translate-x-0' : 'translate-x-full'
+        <div className={`hidden md:block transition-all duration-300 ${isAiChatOpen ? 'translate-x-0 max-w-80 ' : 'translate-x-full'
           }`}>
           <AiChatSidebar
             isOpen={isAiChatOpen}

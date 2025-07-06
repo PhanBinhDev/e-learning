@@ -184,7 +184,7 @@ export default function AiChatSidebar({ isOpen, onClose, currentFile, className 
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[calc(100vh-200px)]">
         {isAnalyzing && (
           <div className="flex justify-start">
             <div className="max-w-[80%] p-3 rounded-lg bg-gray-800 text-white">
